@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct Num
+{
+    int num;
+    struct Num* next;
+};
+
+typedef struct Num* node;
+
+void display(node head)
+{
+    int flag = 1;
+
+    do{
+        printf("%d ",head->num);
+        if(head->next == NULL)
+            flag=0;
+        head = head->next;
+    }while(flag);
+    return;
+}
+int main()
+{
+    node start;
+    int len=0;
+    int i=0,j=0;
+    int ope;
+    int k[100000][3]={0};
+  //  printf("请输入当前链表的长度：\n");
+    scanf("%d",&len);
+    start = (node*)malloc(sizeof(node));
+    node start0 = start;
+    node head = start;
+  //  printf("请输入要生成链表的数字：\n");
+    for(i=0;i<len;i++)
+    {
+        start->next = (node*)malloc(sizeof(node));
+        scanf("%d",&start->next->num);
+        start = start->next;
+    }
+    start->next = NULL;
+   // printf("请输入对链表的操作数：\n");
+    scanf("%d",&ope);
+    for(i=0;i<ope;i++)
+    {
+      //  printf("请输入操作：\n");
+        for(j=0;j<2;j++){
+            scanf("%d",&k[i][j]);
+        }
+        if(k[i][0]==0)
+            scanf("%d",&k[i][2]);
+    }
+    /*for(i=0;i<ope;i++)
+    {
+        for(j=0;j<3;j++)
+        printf("%d ",k[i][j]);
+        printf("\n");
+    }*/
+  for(i=0;i<ope;i++)
+    {
+        if(k[i][0]==0&&(k[i][1]<=len))
+        {
+            for(j=0;j<k[i][1];j++)
+            {
+                start0 = start0->next;
+            }
+            node temp = (node*)malloc(sizeof(node));
+            temp->num = k[i][2];
+            temp->next= start0->next;
+            start0->next = temp;
+            start0 = head;
+            len++;
+        }
+        if(k[i][0]==1&&(k[i][1]!=0)&&(k[i][1]<=len))
+        {
+            for(j=0;j<k[i][1]-1;j++)
+                start0 = start0->next;
+            node temp0 = NULL;
+            temp0 = start0->next->next;
+            free(start0->next);
+            start0->next = temp0;
+            temp0 = NULL;
+            start0 = head;
+            len--;
+        }
+    }
+    display(head->next);
+    return 0;
+}

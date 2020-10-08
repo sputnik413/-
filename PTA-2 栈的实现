@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max_size 20000
+
+struct stack
+{
+    int data;
+    struct stack *next;
+};
+
+typedef struct stack *node;
+typedef node Stack;
+
+Stack create()
+{
+    Stack s;
+    s = (Stack)malloc(sizeof(node));
+    s->next = NULL;
+    return s;
+}
+
+void push(Stack s,int data)
+{
+    node head = (node)malloc(sizeof(node));
+    if( head == NULL)
+        printf("malloc fair!\n");
+
+    head->data = data;
+    head->next = s->next; //新的栈顶head的next指针指向原来的栈顶s->next
+    s->next = head; //s->next 现在指向新的栈顶
+}
+int is_empty(Stack s);
+void pop(Stack s)
+{
+    node head = (node)malloc(sizeof(struct stack));
+    if (head == NULL)
+    {
+        printf("malloc fair!\n");
+    }
+
+    if(is_empty(s))
+    {
+        printf("invalid\n");
+    }
+    else
+        {
+            head = s->next; //head 为栈顶
+            printf("%d\n",head->data);
+            s->next = head->next; //s->next 指向 head->next即新的栈顶
+            free(head); //释放原来栈顶元素所占内存
+        }
+}
+int is_empty(Stack s)
+{
+    return s->next == NULL;
+}
+
+
+int main()
+{
+    int ope;
+    int mem[max_size][2]={0};
+    Stack s = create();
+  //  printf("操作个数：\n");
+    scanf("%d",&ope);
+    int i,j;
+    for(i=0;i<ope;i++)
+    {
+      //  printf("操作：\n");
+            scanf("%d",&mem[i][0]);
+        if(mem[i][0])
+            scanf("%d",&mem[i][1]);
+    }
+    for(i=0;i<ope;i++)
+    {
+        if(mem[i][0])
+        {
+            push(s,mem[i][1]);
+        }
+        else
+        {
+            pop(s);
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max_size 20000
+
+typedef int item;
+
+struct LQnode{
+    item data;
+    struct LQnode *next;
+};
+typedef struct LQnode* pqueue;
+
+pqueue front,rear;
+
+
+
+void Initial()
+{
+    front = NULL;
+    rear = NULL;
+}
+
+void InQueue(item x)
+{
+    pqueue p;
+    p = (pqueue)malloc(sizeof(pqueue));
+    p->data = x;
+    p->next = NULL;
+    if(rear == NULL)
+    {
+        rear = p;
+        front = p;
+    }else
+    rear->next=p;
+    rear=p;
+}
+
+void OutQueue()
+{
+    pqueue p;
+    if(front == NULL)
+        printf("invalid\n");
+    else{
+        printf("%d\n",front->data);
+        p = front;
+        front = front->next;
+    if(front==NULL) rear = NULL;
+    free(p);
+    }
+}
+int main()
+{
+    Initial();
+    int ope;
+    int i,mem[20000][2]={0};
+
+    scanf("%d",&ope);
+
+    for(i=0;i<ope;i++)
+    {
+      //  printf("操作：\n");
+            scanf("%d",&mem[i][0]);
+        if(mem[i][0])
+            scanf("%d",&mem[i][1]);
+    }
+    for(i=0;i<ope;i++)
+    {
+        if(mem[i][0])
+        {
+            InQueue(mem[i][1]);
+        }
+        else
+        {
+            OutQueue();
+        }
+    }
+    return 0;
+}

@@ -14,16 +14,16 @@ pqueue front,rear;
 
 
 
-void Initial()
+void Initial()  //初始化
 {
     front = NULL;
     rear = NULL;
 }
 
-void InQueue(item x)
+void InQueue(item x)  //入栈 参数是传来的数值
 {
     pqueue p;
-    p = (pqueue)malloc(sizeof(pqueue));
+    p = (pqueue)malloc(sizeof(pqueue)); //新分配一块内存空间
     p->data = x;
     p->next = NULL;
     if(rear == NULL)
@@ -32,20 +32,20 @@ void InQueue(item x)
         front = p;
     }else
     rear->next=p;
-    rear=p;
+    rear=p;//队底
 }
 
-void OutQueue()
+void OutQueue()//出队
 {
     pqueue p;
     if(front == NULL)
         printf("invalid\n");
     else{
-        printf("%d\n",front->data);
-        p = front;
-        front = front->next;
+        printf("%d\n",front->data);//先输出出队的数据
+        p = front; //把指针移向队顶
+        front = front->next; //队头向后串
     if(front==NULL) rear = NULL;
-    free(p);
+    free(p); //释放前队头
     }
 }
 int main()

@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct BtNode
+{
+    struct BtNode *left;
+    struct BtNode *right;
+    int data;
+};
+typedef struct BtNode * BinaryTree;
+
+BinaryTree createTree()
+{
+    BinaryTree root;
+    int n;
+    scanf("%d",&n);
+    root = (BinaryTree)malloc(sizeof(BinaryTree));
+    if(n == 0)
+        root = NULL;
+    else{
+        root->data = n;
+        root->left = createTree();
+        root->right= createTree();
+    }
+    return root;
+}
+
+void pretree(BinaryTree root)
+{
+    if(root)
+    {
+        printf("%d ",root->data);
+        pretree(root->left);
+        pretree(root->right);
+    }
+}
+void midtree( BinaryTree root)
+{
+    if(root)
+    {
+        midtree(root->left);
+        printf("%d ",root->data);
+        midtree(root->right);
+    }
+}
+void protree(BinaryTree root)
+{
+    if(root)
+    {
+        protree(root->left);
+        protree(root->right);
+        printf("%d ",root->data);
+    }
+}
+int main()
+{
+    BinaryTree root = createTree();
+    pretree(root);
+    printf("\n");
+    midtree(root);
+    printf("\n");
+    protree(root);
+    return 0;
+}

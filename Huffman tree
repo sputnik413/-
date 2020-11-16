@@ -23,11 +23,20 @@ HuffmanTree createBranch()
         struct HuffmanNode node;
         struct HuffmanNode first,second;
         int i=0;
-        int min=1,min0=-1;
+        int min=-1,min0=-1;
         for(i=0; i<26; i++)
         {
             if(times[i].weight!=0)
-                min = min>times[i].weight?times[i].weight:min;
+            {
+                if(min=-1)
+                {
+                    min=times[i].weight;
+                }
+                else
+                {
+                    min = min>times[i].weight?times[i].weight:min;
+                }
+            }
         }
         for(i=0; i<26; i++)
         {
@@ -48,16 +57,25 @@ HuffmanTree createBranch()
             if(times[i].weight==min&&sequence[i]==min0)
             {
                 first = times[i];
+                first.info=times[i].info;
                 times[i].weight = 0;
                 break;
             }
         }
-        printf("\n%d ",first.weight);
-        min=1,min0=-1;
+        min=-1,min0=-1;
         for(i=0; i<26; i++)
         {
             if(times[i].weight!=0)
-                min = min>times[i].weight?times[i].weight:min;
+            {
+                if(min=-1)
+                {
+                    min=times[i].weight;
+                }
+                else
+                {
+                    min = min>times[i].weight?times[i].weight:min;
+                }
+            }
         }
         for(i=0; i<26; i++)
         {
@@ -78,11 +96,11 @@ HuffmanTree createBranch()
             if(times[i].weight==min&&sequence[i]==min0)
             {
                 second = times[i];
+                second.info=times[i].info;
                 times[i].weight = 0;
                 break;
             }
         }
-        printf("%d\n",second.weight);
         node.LLink = &first;
         node.RLink = &second;
         node.weight = first.weight+second.weight;
@@ -90,7 +108,7 @@ HuffmanTree createBranch()
         times[i] = node;
         sequence[i] = Sq++;
     }
-    for(int i=0;i<26;i++)
+    for(int i=0; i<26; i++)
     {
         if(times[i].weight!=0)
             return &times[i];
